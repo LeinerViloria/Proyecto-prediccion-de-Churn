@@ -13,8 +13,6 @@ def create_red_neuronal_top_level():
     
     df = pd.read_excel('Data/Clientes-Churn-Chile-Sky-22102024.xlsx')
 
-    model = ChurnPredictionModel(df)
-
     def create_combobox(label_text, row_num, options):
         label = tk.Label(window, text=label_text)
         label.grid(row=row_num + total_rows_in_standar_window, column=0, padx=10, pady=5, sticky="w")
@@ -30,11 +28,11 @@ def create_red_neuronal_top_level():
         entry.grid(row=row_num + total_rows_in_standar_window, column=1, padx=10, pady=5)
         return entry
     
-    region_entry = create_combobox(Clientes_Churn.Region, 0, model.df[Clientes_Churn.Region].unique().tolist())
-    comuna_entry = create_combobox(Clientes_Churn.Comuna, 1, model.df[Clientes_Churn.Comuna].unique().tolist())
-    provincia_entry = create_combobox(Clientes_Churn.Provincia, 2, model.df[Clientes_Churn.Provincia].unique().tolist())
-    tipo_queja_entry = create_combobox(Clientes_Churn.Tipo_Queja, 6, model.df[Clientes_Churn.Tipo_Queja].unique().tolist())
-    tipo_mantenimiento_entry = create_combobox(Clientes_Churn.Tipo_Mantenimiento, 8, model.df[Clientes_Churn.Tipo_Mantenimiento].unique().tolist())
+    region_entry = create_combobox(Clientes_Churn.Region, 0, df[Clientes_Churn.Region].unique().tolist())
+    comuna_entry = create_combobox(Clientes_Churn.Comuna, 1, df[Clientes_Churn.Comuna].unique().tolist())
+    provincia_entry = create_combobox(Clientes_Churn.Provincia, 2, df[Clientes_Churn.Provincia].unique().tolist())
+    tipo_queja_entry = create_combobox(Clientes_Churn.Tipo_Queja, 6, df[Clientes_Churn.Tipo_Queja].unique().tolist())
+    tipo_mantenimiento_entry = create_combobox(Clientes_Churn.Tipo_Mantenimiento, 8, df[Clientes_Churn.Tipo_Mantenimiento].unique().tolist())
     
     velocidad_entry = create_entry(Clientes_Churn.Velocidad_Canal, 3)
     antiguedad_entry = create_entry(Clientes_Churn.Antiguedad, 4)
@@ -42,8 +40,10 @@ def create_red_neuronal_top_level():
     mantenimientos_entry = create_entry(Clientes_Churn.Mantenimientos_Mensuales, 7)
     horas_entry = create_entry(Clientes_Churn.Horas_Afectacion, 9)
 
+    model = ChurnPredictionModel(df)
     model.preprocess_data()
     model.train_model()
+    model.evaluate_model()
 
     def predict_churn():
         try:
