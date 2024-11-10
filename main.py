@@ -11,6 +11,9 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("Proyecto de predicción de Churn")
 
+    # Se deshabilita el Maximizar y el Resize
+    root.resizable(False, False)
+
     create_buttons(root, MODELOS)
     Utilities.center_window(root, 400, 200)
     root.mainloop()
