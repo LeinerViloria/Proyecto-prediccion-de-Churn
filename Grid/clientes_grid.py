@@ -81,10 +81,22 @@ class CustomersFilterableSortableTable(tk.Toplevel):
             self.tree.insert('', tk.END, values=tuple(row))
 
     def sort_by_column(self, col, descending):
-        data = [(self.tree.set(child, col), child) for child in self.tree.get_children('')]
-        data.sort(reverse=descending)
+        data = []
+        for child in self.tree.get_children(''):
+            value = self.tree.set(child, col)  # Obtener el valor de la celda
+            # Intentar convertir a número si es posible (int o float)
+            try:
+                value = float(value) if '.' in value else int(value)
+            except ValueError:
+                pass  # Si no se puede convertir a número, mantenerlo como cadena
+            data.append((value, child))
 
+        # Ordenar los datos por el valor de la columna (considerando números y texto)
+        data.sort(key=lambda x: x[0], reverse=descending)
+
+        # Reorganizar las filas según el orden
         for ix, item in enumerate(data):
             self.tree.move(item[1], '', ix)
 
+        # Cambiar la función de ordenación para alternar entre ascendente y descendente
         self.tree.heading(col, command=lambda col=col: self.sort_by_column(col, not descending))
