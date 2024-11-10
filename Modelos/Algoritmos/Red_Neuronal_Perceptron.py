@@ -1,7 +1,10 @@
+from tkinter import messagebox
+import tkinter as tk
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import classification_report, confusion_matrix
 from Data.Clientes_Churn_Chile import Clientes_Churn
 
 class ChurnPredictionModel:
@@ -50,6 +53,12 @@ class ChurnPredictionModel:
         # Crear y entrenar el modelo
         self.model = MLPClassifier(hidden_layer_sizes=(5,), max_iter=1000, random_state=42)
         self.model.fit(self.X_train, self.y_train)
+    
+    def evaluate_model(self, window: tk.Toplevel):
+        # Predicción y evaluación
+        y_pred = self.model.predict(self.X_test)
+        messagebox.showinfo("Resultado de la Predicción", classification_report(self.y_test, y_pred), parent=window)
+        messagebox.showinfo("Matriz de confusión", f'Matriz de confusión:\n{confusion_matrix(self.y_test, y_pred).tolist()}', parent=window)
 
     def predict_churn(self, new_data):
         # Predicción para un nuevo cliente
