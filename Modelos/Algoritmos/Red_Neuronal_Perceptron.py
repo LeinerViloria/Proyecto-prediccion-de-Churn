@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import classification_report, confusion_matrix
+from Charts.Roc_Chart import Roc_Chart
 from Data.Clientes_Churn_Chile import Clientes_Churn
 
 class ChurnPredictionModel:
@@ -67,3 +68,12 @@ class ChurnPredictionModel:
         prediccion_churn = self.model.predict(new_data)
         
         return "El cliente está en riesgo de abandono (Churn)." if prediccion_churn[0] == 1 else "El cliente no está en riesgo de abandono (Churn)."
+    
+    def plot_roc_curve(self):
+        # Obtener las probabilidades de la clase positiva (en este caso, 'Churn' = 1)
+        y_prob = self.model.predict_proba(self.X_test)[:, 1]
+        roc_analyzer = Roc_Chart(self.y_test, y_prob)
+
+        # Calcular curva ROC y AUC
+        roc_analyzer.calculate_roc()
+        roc_analyzer.plot_roc()

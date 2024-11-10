@@ -79,6 +79,7 @@ def create_red_neuronal_top_level():
             
             # Mostrar el resultado
             messagebox.showinfo("Resultado de la Predicción", result, parent=window)
+            model.plot_roc_curve()
         
         except ValueError as e:
             messagebox.showerror("Error", f"Ha ocurrido un error: {e}", parent=window)
