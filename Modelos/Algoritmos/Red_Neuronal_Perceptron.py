@@ -2,7 +2,6 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.neural_network import MLPClassifier
-from sklearn.metrics import classification_report, confusion_matrix
 from Data.Clientes_Churn_Chile import Clientes_Churn
 
 class ChurnPredictionModel:
@@ -51,12 +50,6 @@ class ChurnPredictionModel:
         # Crear y entrenar el modelo
         self.model = MLPClassifier(hidden_layer_sizes=(5,), max_iter=1000, random_state=42)
         self.model.fit(self.X_train, self.y_train)
-    
-    def evaluate_model(self):
-        # Predicción y evaluación
-        y_pred = self.model.predict(self.X_test)
-        print("Reporte de clasificación:\n", classification_report(self.y_test, y_pred))
-        print("Matriz de confusión:\n", confusion_matrix(self.y_test, y_pred))
 
     def predict_churn(self, new_data):
         # Predicción para un nuevo cliente

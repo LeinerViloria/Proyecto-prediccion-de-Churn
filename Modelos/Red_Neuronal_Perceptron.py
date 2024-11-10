@@ -43,7 +43,6 @@ def create_red_neuronal_top_level():
     model = ChurnPredictionModel(df)
     model.preprocess_data()
     model.train_model()
-    model.evaluate_model()
 
     def predict_churn():
         try:
