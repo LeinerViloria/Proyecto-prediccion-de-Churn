@@ -10,7 +10,11 @@ class ChurnPredictionModel:
         self.df = data
         self.model = None
         self.scaler = StandardScaler()
-        self.le = LabelEncoder()
+        self.region_label_encoder = LabelEncoder()
+        self.comuna_label_encoder = LabelEncoder()
+        self.provincia_label_encoder = LabelEncoder()
+        self.tipo_queja_label_encoder = LabelEncoder()
+        self.tipo_mantenimiento_label_encoder = LabelEncoder()
         self.X_train = None
         self.X_test = None
         self.y_train = None
@@ -18,11 +22,11 @@ class ChurnPredictionModel:
         self.categorias = None
 
     def preprocess_data(self):
-        self.df[Clientes_Churn.Region] = self.le.fit_transform(self.df[Clientes_Churn.Region])
-        self.df[Clientes_Churn.Comuna] = self.le.fit_transform(self.df[Clientes_Churn.Comuna])
-        self.df[Clientes_Churn.Provincia] = self.le.fit_transform(self.df[Clientes_Churn.Provincia])
-        self.df[Clientes_Churn.Tipo_Queja] = self.le.fit_transform(self.df[Clientes_Churn.Tipo_Queja])
-        self.df[Clientes_Churn.Tipo_Mantenimiento] = self.le.fit_transform(self.df[Clientes_Churn.Tipo_Mantenimiento])
+        self.df[Clientes_Churn.Region] = self.region_label_encoder.fit_transform(self.df[Clientes_Churn.Region])
+        self.df[Clientes_Churn.Comuna] = self.comuna_label_encoder.fit_transform(self.df[Clientes_Churn.Comuna])
+        self.df[Clientes_Churn.Provincia] = self.provincia_label_encoder.fit_transform(self.df[Clientes_Churn.Provincia])
+        self.df[Clientes_Churn.Tipo_Queja] = self.tipo_queja_label_encoder.fit_transform(self.df[Clientes_Churn.Tipo_Queja])
+        self.df[Clientes_Churn.Tipo_Mantenimiento] = self.tipo_mantenimiento_label_encoder.fit_transform(self.df[Clientes_Churn.Tipo_Mantenimiento])
 
         umbral_quejas = self.df[Clientes_Churn.Cantidad_Quejas].quantile(0.75)  # Percentil 75
         umbral_mantenimientos = self.df[Clientes_Churn.Mantenimientos_Mensuales].quantile(0.75) # Percentil 75

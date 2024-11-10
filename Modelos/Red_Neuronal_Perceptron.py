@@ -63,11 +63,11 @@ def create_red_neuronal_top_level():
                 raise ValueError("Por favor ingrese valores válidos para los campos numéricos.")
 
             # Codificación de variables categóricas
-            region = model.le.transform([region])[0]
-            comuna = model.le.transform([comuna])[0]
-            provincia = model.le.transform([provincia])[0]
-            tipo_queja = model.le.transform([tipo_queja])[0]
-            tipo_mantenimiento = model.le.transform([tipo_mantenimiento])[0]
+            region = model.region_label_encoder.transform([region])[0]
+            comuna = model.comuna_label_encoder.transform([comuna])[0]
+            provincia = model.provincia_label_encoder.transform([provincia])[0]
+            tipo_queja = model.tipo_queja_label_encoder.transform([tipo_queja])[0]
+            tipo_mantenimiento = model.tipo_mantenimiento_label_encoder.transform([tipo_mantenimiento])[0]
 
             # Crear el vector de entrada para la predicción
             input_data = [
