@@ -2,15 +2,15 @@ import tkinter as tk
 from tkinter import ttk
 import pandas as pd
 
-class CustomersFilterableSortableTable(tk.Toplevel): 
-    def __init__(self, parent):
+class FilterableSortableTable(tk.Toplevel): 
+    def __init__(self, parent, title: str, size: str, file_source: str):
         super().__init__(parent)
 
-        self.title("Clientes Churn - Chile")
-        self.geometry("1200x600")
+        self.title(title) #"Clientes Churn - Chile"
+        self.geometry(size) #"1200x600"
 
         # Leer el archivo Excel
-        self.df = pd.read_excel('Data/Clientes-Churn-Chile-Sky-22102024.xlsx')
+        self.df = pd.read_excel(file_source) #'Data/Clientes-Churn-Chile-Sky-22102024.xlsx'
 
         # Obtener las columnas desde el DataFrame
         columns = list(self.df.columns)

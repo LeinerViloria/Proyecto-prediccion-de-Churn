@@ -1,5 +1,5 @@
 import tkinter as tk
-from Grid.clientes_grid import CustomersFilterableSortableTable
+from Grid.FilterableSortableTable import FilterableSortableTable
 from Utils import Utilities
 
 def center_window(root, width=400, height=200):
@@ -22,7 +22,7 @@ def create_standar_top_level(title: str, main_label: str) -> tk.Toplevel:
     label.pack(pady=10)
 
     def open_filterable_table():
-        table_window = CustomersFilterableSortableTable(new_window) 
+        table_window = FilterableSortableTable(new_window, "Clientes Churn - Chile", "1200x600", 'Data/Clientes-Churn-Chile-Sky-22102024.xlsx') 
 
     button = tk.Button(new_window, text="Ver información", command=open_filterable_table)
     button.pack(pady=5)
