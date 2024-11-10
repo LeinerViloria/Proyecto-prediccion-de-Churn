@@ -6,11 +6,11 @@ class FilterableSortableTable(tk.Toplevel):
     def __init__(self, parent, title: str, size: str, file_source: str):
         super().__init__(parent)
 
-        self.title(title) #"Clientes Churn - Chile"
-        self.geometry(size) #"1200x600"
+        self.title(title)
+        self.geometry(size)
 
         # Leer el archivo Excel
-        self.df = pd.read_excel(file_source) #'Data/Clientes-Churn-Chile-Sky-22102024.xlsx'
+        self.df = pd.read_excel(file_source)
 
         # Obtener las columnas desde el DataFrame
         columns = list(self.df.columns)
