@@ -34,7 +34,7 @@ def create_red_neuronal_top_level():
     comuna_entry = create_combobox(Clientes_Churn.Comuna, 1, model.df[Clientes_Churn.Comuna].unique().tolist())
     provincia_entry = create_combobox(Clientes_Churn.Provincia, 2, model.df[Clientes_Churn.Provincia].unique().tolist())
     tipo_queja_entry = create_combobox(Clientes_Churn.Tipo_Queja, 6, model.df[Clientes_Churn.Tipo_Queja].unique().tolist())
-    tipo_mantenimiento_entry = create_combobox(Clientes_Churn.Tipo_Mantenimiento, 8, model.df[Clientes_Churn.Tipo_Mantenimiento].unique())
+    tipo_mantenimiento_entry = create_combobox(Clientes_Churn.Tipo_Mantenimiento, 8, model.df[Clientes_Churn.Tipo_Mantenimiento].unique().tolist())
     
     velocidad_entry = create_entry(Clientes_Churn.Velocidad_Canal, 3)
     antiguedad_entry = create_entry(Clientes_Churn.Antiguedad, 4)
