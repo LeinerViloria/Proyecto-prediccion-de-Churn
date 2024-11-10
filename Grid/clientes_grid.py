@@ -2,9 +2,9 @@ import tkinter as tk
 from tkinter import ttk
 import pandas as pd
 
-class FilterableSortableTable(tk.Tk):
-    def __init__(self):
-        super().__init__()
+class CustomersFilterableSortableTable(tk.Toplevel): 
+    def __init__(self, parent):
+        super().__init__(parent)
 
         self.title("Clientes Churn Chile")
         self.geometry("1200x600")
@@ -88,8 +88,3 @@ class FilterableSortableTable(tk.Tk):
             self.tree.move(item[1], '', ix)
 
         self.tree.heading(col, command=lambda col=col: self.sort_by_column(col, not descending))
-
-
-if __name__ == "__main__":
-    app = FilterableSortableTable()
-    app.mainloop()

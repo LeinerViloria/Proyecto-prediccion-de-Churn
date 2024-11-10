@@ -1,4 +1,5 @@
 import tkinter as tk
+from Grid.clientes_grid import CustomersFilterableSortableTable
 from Utils import Utilities
 
 def center_window(root, width=400, height=200):
@@ -17,8 +18,15 @@ def create_standar_top_level(title: str, main_label: str) -> tk.Toplevel:
     new_window = tk.Toplevel()
     new_window.title(title)
     
-    label = tk.Label(new_window, text=main_label)
-    label.pack(pady=20)
+    label = tk.Label(new_window, text=main_label, font=("Helvetica", 16, "bold"))
+    label.pack(pady=10)
+
+    def open_filterable_table():
+        table_window = CustomersFilterableSortableTable(new_window) 
+
+    button = tk.Button(new_window, text="Ver información", command=open_filterable_table)
+    button.pack(pady=5)
+
     Utilities.center_window(new_window, 800, 400)
 
     return new_window
