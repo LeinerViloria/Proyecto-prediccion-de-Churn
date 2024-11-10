@@ -10,8 +10,7 @@ def create_red_neuronal_top_level():
     
     df = pd.read_excel('Data/Clientes-Churn-Chile-Sky-22102024.xlsx')
 
-    # Instancia de tu modelo de predicción
-    model = ChurnPredictionModel(df)  # df es tu DataFrame
+    model = ChurnPredictionModel(df)
     model.preprocess_data()
     model.train_model()
 
@@ -23,7 +22,7 @@ def create_red_neuronal_top_level():
         return entry
     
     # Crear las entradas para las variables del modelo
-    region_entry = create_entry('Region', 0)
+    region_entry = create_entry('Region', 100)
     comuna_entry = create_entry('Comuna', 1)
     provincia_entry = create_entry('Provincia', 2)
     velocidad_entry = create_entry('Velocidad del Canal (Mb)', 3)
@@ -34,10 +33,8 @@ def create_red_neuronal_top_level():
     tipo_mantenimiento_entry = create_entry('Tipo de Mantenimiento', 8)
     horas_entry = create_entry('Horas de Afectación', 9)
 
-    # Función para hacer la predicción
     def predict_churn():
         try:
-            # Obtener los valores de las entradas
             region = region_entry.get()
             comuna = comuna_entry.get()
             provincia = provincia_entry.get()
@@ -49,7 +46,6 @@ def create_red_neuronal_top_level():
             tipo_mantenimiento = tipo_mantenimiento_entry.get()
             horas_afectacion = float(horas_entry.get())
 
-            # Validación de los valores numéricos
             if velocidad_canal <= 0 or antiguedad < 0 or cantidad_quejas < 0 or mantenimientos_mensuales < 0 or horas_afectacion < 0:
                 raise ValueError("Por favor ingrese valores válidos para los campos numéricos.")
 

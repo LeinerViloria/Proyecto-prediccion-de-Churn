@@ -23,10 +23,12 @@ class ChurnPredictionModel:
         self.df['Provincia'] = self.le.fit_transform(self.df['Provincia'])
         self.df['Tipo de Queja'] = self.le.fit_transform(self.df['Tipo de Queja'])
         self.df['Tipo de Mantenimiento'] = self.le.fit_transform(self.df['Tipo de Mantenimiento'])
+
+        umbral_quejas = self.df['Cantidad de Quejas'].quantile(0.75)  # Percentil 75
+        umbral_mantenimientos = self.df['Mantenimientos Mensuales'].quantile(0.75) # Percentil 75
         
-        # Definir la variable objetivo 'Churn' basándonos en la cantidad de quejas y mantenimientos mensuales
-        # Si un cliente tiene más de 3 quejas o 2 mantenimientos mensuales, se considera en riesgo de Churn
-        self.df['Churn'] = ((self.df['Cantidad de Quejas'] > 3) | (self.df['Mantenimientos Mensuales'] > 2)).astype(int)
+        # Se define la variable objetivo 'Churn' basándonos en la cantidad de quejas y mantenimientos mensuales
+        self.df['Churn'] = ((self.df['Cantidad de Quejas'] > umbral_quejas) | (self.df['Mantenimientos Mensuales'] > umbral_mantenimientos)).astype(int)
         
         # Variables independientes y dependientes
         X = self.df[['Region', 'Comuna', 'Provincia', 'Velocidad del Canal (Mb)', 
