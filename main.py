@@ -1,6 +1,5 @@
 import tkinter as tk
 from Modelos import MODELOS
-from Utils import Utilities
 
 def create_buttons(root, buttons_info):
     for button_info in buttons_info:
