@@ -1,0 +1,15 @@
+
+class Clientes_Churn:
+    Id = 'ID'
+    Region = 'Region'
+    Comuna = 'Comuna'
+    Provincia = 'Provincia'
+    Velocidad_Canal = 'Velocidad del Canal (Mb)'
+    Antiguedad = 'Antigüedad (meses)'
+    Cantidad_Quejas = 'Cantidad de Quejas'
+    Tipo_Queja = 'Tipo de Queja'
+    Mantenimientos_Mensuales = 'Mantenimientos Mensuales'
+    Tipo_Mantenimiento = 'Tipo de Mantenimiento'
+    Horas_Afectacion = 'Horas de Afectación'
+    Satisfaccion = 'Satisfacción'
+    Insatisfaccion = 'Insatisfacción'

@@ -4,6 +4,7 @@ from tkinter import messagebox
 import pandas as pd
 from Utils import Utilities
 from Modelos.Algoritmos.Red_Neuronal_Perceptron import ChurnPredictionModel
+from Data.Clientes_Churn_Chile import Clientes_Churn
 
 def create_red_neuronal_top_level():
     window = Utilities.create_standar_top_level("Red neuronal", "Perceptron - Tipo de red neuronal artificial")
@@ -22,16 +23,16 @@ def create_red_neuronal_top_level():
         return entry
     
     # Crear las entradas para las variables del modelo
-    region_entry = create_entry('Region', 100)
-    comuna_entry = create_entry('Comuna', 1)
-    provincia_entry = create_entry('Provincia', 2)
-    velocidad_entry = create_entry('Velocidad del Canal (Mb)', 3)
-    antiguedad_entry = create_entry('Antigüedad (meses)', 4)
-    quejas_entry = create_entry('Cantidad de Quejas', 5)
-    tipo_queja_entry = create_entry('Tipo de Queja', 6)
-    mantenimientos_entry = create_entry('Mantenimientos Mensuales', 7)
-    tipo_mantenimiento_entry = create_entry('Tipo de Mantenimiento', 8)
-    horas_entry = create_entry('Horas de Afectación', 9)
+    region_entry = create_entry(Clientes_Churn.Region, 100)
+    comuna_entry = create_entry(Clientes_Churn.Comuna, 1)
+    provincia_entry = create_entry(Clientes_Churn.Provincia, 2)
+    velocidad_entry = create_entry(Clientes_Churn.Velocidad_Canal, 3)
+    antiguedad_entry = create_entry(Clientes_Churn.Antiguedad, 4)
+    quejas_entry = create_entry(Clientes_Churn.Cantidad_Quejas, 5)
+    tipo_queja_entry = create_entry(Clientes_Churn.Tipo_Queja, 6)
+    mantenimientos_entry = create_entry(Clientes_Churn.Mantenimientos_Mensuales, 7)
+    tipo_mantenimiento_entry = create_entry(Clientes_Churn.Tipo_Mantenimiento, 8)
+    horas_entry = create_entry(Clientes_Churn.Horas_Afectacion, 9)
 
     def predict_churn():
         try:

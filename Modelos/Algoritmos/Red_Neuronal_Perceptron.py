@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import classification_report, confusion_matrix
+from Data.Clientes_Churn_Chile import Clientes_Churn
 
 class ChurnPredictionModel:
     def __init__(self, data):
@@ -18,22 +19,22 @@ class ChurnPredictionModel:
         self.categorias = None
 
     def preprocess_data(self):
-        self.df['Region'] = self.le.fit_transform(self.df['Region'])
-        self.df['Comuna'] = self.le.fit_transform(self.df['Comuna'])
-        self.df['Provincia'] = self.le.fit_transform(self.df['Provincia'])
-        self.df['Tipo de Queja'] = self.le.fit_transform(self.df['Tipo de Queja'])
-        self.df['Tipo de Mantenimiento'] = self.le.fit_transform(self.df['Tipo de Mantenimiento'])
+        self.df[Clientes_Churn.Region] = self.le.fit_transform(self.df[Clientes_Churn.Region])
+        self.df[Clientes_Churn.Comuna] = self.le.fit_transform(self.df[Clientes_Churn.Comuna])
+        self.df[Clientes_Churn.Provincia] = self.le.fit_transform(self.df[Clientes_Churn.Provincia])
+        self.df[Clientes_Churn.Tipo_Queja] = self.le.fit_transform(self.df[Clientes_Churn.Tipo_Queja])
+        self.df[Clientes_Churn.Tipo_Mantenimiento] = self.le.fit_transform(self.df[Clientes_Churn.Tipo_Mantenimiento])
 
-        umbral_quejas = self.df['Cantidad de Quejas'].quantile(0.75)  # Percentil 75
-        umbral_mantenimientos = self.df['Mantenimientos Mensuales'].quantile(0.75) # Percentil 75
+        umbral_quejas = self.df[Clientes_Churn.Cantidad_Quejas].quantile(0.75)  # Percentil 75
+        umbral_mantenimientos = self.df[Clientes_Churn.Mantenimientos_Mensuales].quantile(0.75) # Percentil 75
         
         # Se define la variable objetivo 'Churn' basándonos en la cantidad de quejas y mantenimientos mensuales
-        self.df['Churn'] = ((self.df['Cantidad de Quejas'] > umbral_quejas) | (self.df['Mantenimientos Mensuales'] > umbral_mantenimientos)).astype(int)
+        self.df['Churn'] = ((self.df[Clientes_Churn.Tipo_Mantenimiento] > umbral_quejas) | (self.df[Clientes_Churn.Mantenimientos_Mensuales] > umbral_mantenimientos)).astype(int)
         
         # Variables independientes y dependientes
-        X = self.df[['Region', 'Comuna', 'Provincia', 'Velocidad del Canal (Mb)', 
-                     'Antigüedad (meses)', 'Cantidad de Quejas', 'Tipo de Queja', 
-                     'Mantenimientos Mensuales', 'Tipo de Mantenimiento', 'Horas de Afectación']]
+        X = self.df[[Clientes_Churn.Region, Clientes_Churn.Comuna, Clientes_Churn.Provincia, Clientes_Churn.Velocidad_Canal, 
+                     Clientes_Churn.Antiguedad, Clientes_Churn.Tipo_Mantenimiento, Clientes_Churn.Tipo_Queja, 
+                     Clientes_Churn.Mantenimientos_Mensuales, Clientes_Churn.Tipo_Mantenimiento, Clientes_Churn.Horas_Afectacion]]
         y = self.df['Churn']
         
         # Dividir en conjunto de entrenamiento y prueba
