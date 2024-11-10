@@ -14,7 +14,7 @@ def center_window(root, width=400, height=200):
     # Establece el tamaño y la posición de la ventana
     root.geometry(f'{width}x{height}+{x}+{y}')
 
-def create_standar_top_level(title: str, main_label: str) -> tk.Toplevel:
+def create_standar_top_level(title: str, main_label: str, height: int = 400) -> tk.Toplevel:
     new_window = tk.Toplevel()
     new_window.title(title)
     
@@ -32,6 +32,6 @@ def create_standar_top_level(title: str, main_label: str) -> tk.Toplevel:
     new_window.grid_columnconfigure(0, weight=1)
     new_window.grid_columnconfigure(1, weight=1)
 
-    Utilities.center_window(new_window, 800, 400)
+    Utilities.center_window(new_window, 800, height)
 
     return new_window
