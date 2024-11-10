@@ -1,4 +1,6 @@
-def accion_regresion_lineal():
-    print("Ejecutando Regresión Lineal")
+from Utils import Utilities
 
-REGRESION_LINEAL = {"label": "Regresión lineal", "action": accion_regresion_lineal}
+def create_regresion_lineal_top_level():
+    window = Utilities.create_standar_top_level("Modelo de Regresión Lineal", "Modelo de Regresión Lineal")
+
+REGRESION_LINEAL = {"label": "Regresión lineal", "action": create_regresion_lineal_top_level}

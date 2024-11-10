@@ -1,4 +1,6 @@
-def accion_regresion_lineal_multiple():
-    print("Ejecutando Regresión Lineal Múltiple")
+from Utils import Utilities
 
-REGRESION_LINEAL_MULTIPLE = {"label": "Regresión lineal múltiple", "action": accion_regresion_lineal_multiple}
+def create_regresion_lineal_multiple_top_level():
+    window = Utilities.create_standar_top_level("Modelo de Regresión lineal múltiple", "Modelo de Regresión lineal múltiple")
+
+REGRESION_LINEAL_MULTIPLE = {"label": "Regresión lineal múltiple", "action": create_regresion_lineal_multiple_top_level}

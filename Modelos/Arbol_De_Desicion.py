@@ -1,4 +1,6 @@
-def accion_arbol_decisiones():
-    print("Ejecutando Árbol de Decisiones")
+from Utils import Utilities
 
-ARBOL_DE_DESICION = {"label": "Árbol de decisiones", "action": accion_arbol_decisiones}
+def create_arbol_de_decision_top_level():
+    window = Utilities.create_standar_top_level("Modelo de arbol de decisión", "Modelo de decisión")
+
+ARBOL_DE_DESICION = {"label": "Árbol de decisiones", "action": create_arbol_de_decision_top_level}
