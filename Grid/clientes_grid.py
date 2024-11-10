@@ -6,7 +6,7 @@ class CustomersFilterableSortableTable(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
 
-        self.title("Clientes Churn Chile")
+        self.title("Clientes Churn - Chile")
         self.geometry("1200x600")
 
         # Leer el archivo Excel
