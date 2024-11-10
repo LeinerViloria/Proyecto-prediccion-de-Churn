@@ -7,6 +7,7 @@ from Modelos.Algoritmos.Red_Neuronal_Perceptron import ChurnPredictionModel
 from Data.Clientes_Churn_Chile import Clientes_Churn
 
 def create_red_neuronal_top_level():
+    total_rows_in_standar_window = 2
     window = Utilities.create_standar_top_level("Red neuronal", "Perceptron - Tipo de red neuronal artificial")
     
     df = pd.read_excel('Data/Clientes-Churn-Chile-Sky-22102024.xlsx')
@@ -17,13 +18,13 @@ def create_red_neuronal_top_level():
 
     def create_entry(label_text, row_num):
         label = tk.Label(window, text=label_text)
-        label.grid(row=row_num, column=0)
+        label.grid(row=row_num + total_rows_in_standar_window, column=0)
         entry = tk.Entry(window)
-        entry.grid(row=row_num, column=1)
+        entry.grid(row=row_num + total_rows_in_standar_window, column=1)
         return entry
     
     # Crear las entradas para las variables del modelo
-    region_entry = create_entry(Clientes_Churn.Region, 100)
+    region_entry = create_entry(Clientes_Churn.Region, 0)
     comuna_entry = create_entry(Clientes_Churn.Comuna, 1)
     provincia_entry = create_entry(Clientes_Churn.Provincia, 2)
     velocidad_entry = create_entry(Clientes_Churn.Velocidad_Canal, 3)
@@ -74,7 +75,7 @@ def create_red_neuronal_top_level():
             messagebox.showerror("Error", f"Error desconocido: {e}")
 
     predict_button = tk.Button(window, text="Predecir Churn", command=predict_churn)
-    predict_button.grid(row=10, column=0, columnspan=2, pady=10)
+    predict_button.grid(row=10 + total_rows_in_standar_window, column=0, columnspan=2, pady=10)
 
     # Ajustar la posición de la ventana
     Utilities.center_window(window, 800, 400)

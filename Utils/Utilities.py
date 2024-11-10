@@ -18,14 +18,19 @@ def create_standar_top_level(title: str, main_label: str) -> tk.Toplevel:
     new_window = tk.Toplevel()
     new_window.title(title)
     
+    # Crear un Label para el título y ubicarlo centrado horizontalmente
     label = tk.Label(new_window, text=main_label, font=("Helvetica", 16, "bold"))
-    label.pack(pady=10)
-
+    label.grid(row=0, column=0, columnspan=2, padx=10, pady=10, sticky="ew")  # Centrado horizontal con sticky="ew"
+    
+    # Función para abrir la tabla
     def open_filterable_table():
         table_window = FilterableSortableTable(new_window, "Clientes Churn - Chile", "1200x600", 'Data/Clientes-Churn-Chile-Sky-22102024.xlsx') 
 
     button = tk.Button(new_window, text="Ver información", command=open_filterable_table)
-    button.pack(pady=5)
+    button.grid(row=1, column=0, padx=10, pady=5, sticky="w")
+    
+    new_window.grid_columnconfigure(0, weight=1)
+    new_window.grid_columnconfigure(1, weight=1)
 
     Utilities.center_window(new_window, 800, 400)
 
