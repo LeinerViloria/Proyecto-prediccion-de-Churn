@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from tkinter import ttk  # Importa ttk para los Combobox
+from tkinter import ttk
 import pandas as pd
 from Utils import Utilities
 from Modelos.Algoritmos.Red_Neuronal_Perceptron import ChurnPredictionModel
@@ -78,12 +78,12 @@ def create_red_neuronal_top_level():
             result = model.predict_churn(input_data)
             
             # Mostrar el resultado
-            messagebox.showinfo("Resultado de la Predicción", result)
+            messagebox.showinfo("Resultado de la Predicción", result, parent=window)
         
         except ValueError as e:
-            messagebox.showerror("Error", f"Ha ocurrido un error: {e}")
+            messagebox.showerror("Error", f"Ha ocurrido un error: {e}", parent=window)
         except Exception as e:
-            messagebox.showerror("Error", f"Error desconocido: {e}")
+            messagebox.showerror("Error", f"Error desconocido: {e}", parent=window)
 
     predict_button = tk.Button(window, text="Predecir Churn", command=predict_churn)
     predict_button.grid(row=10 + total_rows_in_standar_window, column=0, columnspan=2, pady=5)

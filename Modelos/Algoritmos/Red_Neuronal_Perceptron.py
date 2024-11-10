@@ -32,7 +32,7 @@ class ChurnPredictionModel:
         umbral_mantenimientos = self.df[Clientes_Churn.Mantenimientos_Mensuales].quantile(0.75) # Percentil 75
         
         # Se define la variable objetivo 'Churn' basándonos en la cantidad de quejas y mantenimientos mensuales
-        self.df['Churn'] = ((self.df[Clientes_Churn.Tipo_Mantenimiento] > umbral_quejas) | (self.df[Clientes_Churn.Mantenimientos_Mensuales] > umbral_mantenimientos)).astype(int)
+        self.df['Churn'] = ((self.df[Clientes_Churn.Cantidad_Quejas] > umbral_quejas) | (self.df[Clientes_Churn.Mantenimientos_Mensuales] > umbral_mantenimientos)).astype(int)
         
         # Variables independientes y dependientes
         X = self.df[[Clientes_Churn.Region, Clientes_Churn.Comuna, Clientes_Churn.Provincia, Clientes_Churn.Velocidad_Canal, 
