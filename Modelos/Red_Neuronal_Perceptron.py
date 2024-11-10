@@ -30,11 +30,11 @@ def create_red_neuronal_top_level():
         entry.grid(row=row_num + total_rows_in_standar_window, column=1, padx=10, pady=5)
         return entry
     
-    region_entry = create_combobox(Clientes_Churn.Region, 0, ['Región Metropolitana de Santiago', 'Valparaíso', 'Concepción'])
-    comuna_entry = create_combobox(Clientes_Churn.Comuna, 1, ['Comuna 1', 'Comuna 2', 'Comuna 3'])
-    provincia_entry = create_combobox(Clientes_Churn.Provincia, 2, ['Provincia 1', 'Provincia 2', 'Provincia 3'])
-    tipo_queja_entry = create_combobox(Clientes_Churn.Tipo_Queja, 6, ['Tipo 1', 'Tipo 2', 'Tipo 3'])
-    tipo_mantenimiento_entry = create_combobox(Clientes_Churn.Tipo_Mantenimiento, 8, ['Mantenimiento 1', 'Mantenimiento 2', 'Mantenimiento 3'])
+    region_entry = create_combobox(Clientes_Churn.Region, 0, model.df[Clientes_Churn.Region].unique().tolist())
+    comuna_entry = create_combobox(Clientes_Churn.Comuna, 1, model.df[Clientes_Churn.Comuna].unique().tolist())
+    provincia_entry = create_combobox(Clientes_Churn.Provincia, 2, model.df[Clientes_Churn.Provincia].unique().tolist())
+    tipo_queja_entry = create_combobox(Clientes_Churn.Tipo_Queja, 6, model.df[Clientes_Churn.Tipo_Queja].unique().tolist())
+    tipo_mantenimiento_entry = create_combobox(Clientes_Churn.Tipo_Mantenimiento, 8, model.df[Clientes_Churn.Tipo_Mantenimiento].unique())
     
     velocidad_entry = create_entry(Clientes_Churn.Velocidad_Canal, 3)
     antiguedad_entry = create_entry(Clientes_Churn.Antiguedad, 4)
