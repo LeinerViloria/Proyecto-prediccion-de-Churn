@@ -1,8 +1,5 @@
 import tkinter as tk
-from Modelos.Knn import KNN
-from Modelos.Arbol_De_Desicion import ARBOL_DE_DESICION
-from Modelos.Regresion_Lineal import REGRESION_LINEAL
-from Modelos.Regresion_Lineal_Multiple import REGRESION_LINEAL_MULTIPLE
+from Modelos import MODELOS
 
 def center_window(root, width=300, height=200):
     # Obtiene el ancho y alto de la pantalla
@@ -25,13 +22,6 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("Proyecto de predicción de Churn")
 
-    buttons_info = [
-        KNN,
-        ARBOL_DE_DESICION,
-        REGRESION_LINEAL,
-        REGRESION_LINEAL_MULTIPLE
-    ]
-
-    create_buttons(root, buttons_info)
+    create_buttons(root, MODELOS)
     center_window(root, 400, 200)
     root.mainloop()
