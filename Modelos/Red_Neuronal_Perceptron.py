@@ -2,12 +2,16 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 import pandas as pd
+from Grid.FilterableSortableTable import FilterableSortableTable
 from Utils import Utilities
 from Modelos.Algoritmos.Red_Neuronal_Perceptron import ChurnPredictionModel
 from Data.Clientes_Churn_Chile import Clientes_Churn
 
-def analyze_risk_clients():
-    print("Analizando clientes con riesgo de abandono en red neuronal")
+def analyze_risk_clients(window: tk.Toplevel):
+    df = pd.read_excel('Data/Clientes-Churn-Chile-Sky-22102024.xlsx')
+    model = ChurnPredictionModel(df)
+    result = model.analyze_risk_clients()
+    table_window = FilterableSortableTable(window, "Clientes en riesgo de abandono", "1200x600", '', custom_data=result)
 
 def create_red_neuronal_top_level():
     total_rows_in_standar_window = 2

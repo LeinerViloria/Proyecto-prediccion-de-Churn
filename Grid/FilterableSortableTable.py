@@ -3,14 +3,24 @@ from tkinter import ttk
 import pandas as pd
 
 class FilterableSortableTable(tk.Toplevel): 
-    def __init__(self, parent, title: str, size: str, file_source: str):
+    def __init__(
+            self, 
+            parent, 
+            title: str, 
+            size: str, 
+            file_source: str, 
+            custom_data: pd.DataFrame = None
+        ):
         super().__init__(parent)
 
         self.title(title)
         self.geometry(size)
 
-        # Leer el archivo Excel
-        self.df = pd.read_excel(file_source)
+        if custom_data is None:
+            # Leer el archivo Excel
+            self.df = pd.read_excel(file_source)
+        else:
+            self.df = custom_data
 
         # Obtener las columnas desde el DataFrame
         columns = list(self.df.columns)

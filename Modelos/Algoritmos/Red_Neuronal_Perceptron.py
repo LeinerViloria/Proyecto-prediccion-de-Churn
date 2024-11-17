@@ -22,7 +22,6 @@ class ChurnPredictionModel:
         self.X_test = None
         self.y_train = None
         self.y_test = None
-        self.categorias = None
 
     def preprocess_data(self):
         self.df[Clientes_Churn.Region] = self.region_label_encoder.fit_transform(self.df[Clientes_Churn.Region])
@@ -31,49 +30,62 @@ class ChurnPredictionModel:
         self.df[Clientes_Churn.Tipo_Queja] = self.tipo_queja_label_encoder.fit_transform(self.df[Clientes_Churn.Tipo_Queja])
         self.df[Clientes_Churn.Tipo_Mantenimiento] = self.tipo_mantenimiento_label_encoder.fit_transform(self.df[Clientes_Churn.Tipo_Mantenimiento])
 
-        umbral_quejas = self.df[Clientes_Churn.Cantidad_Quejas].quantile(0.75)  # Percentil 75
-        umbral_mantenimientos = self.df[Clientes_Churn.Mantenimientos_Mensuales].quantile(0.75) # Percentil 75
+        umbral_quejas = self.df[Clientes_Churn.Cantidad_Quejas].quantile(0.75)
+        umbral_mantenimientos = self.df[Clientes_Churn.Mantenimientos_Mensuales].quantile(0.75)
         
-        # Se define la variable objetivo 'Churn' basándonos en la cantidad de quejas y mantenimientos mensuales
         self.df['Churn'] = ((self.df[Clientes_Churn.Cantidad_Quejas] > umbral_quejas) | (self.df[Clientes_Churn.Mantenimientos_Mensuales] > umbral_mantenimientos)).astype(int)
         
-        # Variables independientes y dependientes
         X = self.df[[Clientes_Churn.Region, Clientes_Churn.Comuna, Clientes_Churn.Provincia, Clientes_Churn.Velocidad_Canal, 
                      Clientes_Churn.Antiguedad, Clientes_Churn.Tipo_Mantenimiento, Clientes_Churn.Tipo_Queja, 
                      Clientes_Churn.Mantenimientos_Mensuales, Clientes_Churn.Tipo_Mantenimiento, Clientes_Churn.Horas_Afectacion]]
         y = self.df['Churn']
         
-        # Dividir en conjunto de entrenamiento y prueba
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.3, random_state=42)
         
-        # Estandarizar los datos
         self.X_train = self.scaler.fit_transform(self.X_train)
         self.X_test = self.scaler.transform(self.X_test)
 
     def train_model(self):
-        # Crear y entrenar el modelo
         self.model = MLPClassifier(hidden_layer_sizes=(5,), max_iter=1000, random_state=42)
         self.model.fit(self.X_train, self.y_train)
     
     def evaluate_model(self, window: tk.Toplevel):
-        # Predicción y evaluación
         y_pred = self.model.predict(self.X_test)
         messagebox.showinfo("Resultado de la Predicción", classification_report(self.y_test, y_pred), parent=window)
         messagebox.showinfo("Matriz de confusión", f'Matriz de confusión:\n{confusion_matrix(self.y_test, y_pred).tolist()}', parent=window)
 
     def predict_churn(self, new_data):
-        # Predicción para un nuevo cliente
-        new_data = np.array([new_data])  # Los datos deben ser una lista de listas
+        new_data = np.array([new_data])
         new_data = self.scaler.transform(new_data)
         prediccion_churn = self.model.predict(new_data)
         
         return "El cliente está en riesgo de abandono (Churn)." if prediccion_churn[0] == 1 else "El cliente no está en riesgo de abandono (Churn)."
     
     def plot_roc_curve(self):
-        # Obtener las probabilidades de la clase positiva (en este caso, 'Churn' = 1)
         y_prob = self.model.predict_proba(self.X_test)[:, 1]
         roc_analyzer = Roc_Chart(self.y_test, y_prob)
 
-        # Calcular curva ROC y AUC
         roc_analyzer.calculate_roc()
         roc_analyzer.plot_roc()
+
+    def analyze_risk_clients(self):
+        # Preprocesar y entrenar el modelo
+        self.preprocess_data()
+        self.train_model()
+
+        # Obtener las predicciones para todos los clientes
+        X_all = self.df[[Clientes_Churn.Region, Clientes_Churn.Comuna, Clientes_Churn.Provincia, Clientes_Churn.Velocidad_Canal, 
+                         Clientes_Churn.Antiguedad, Clientes_Churn.Tipo_Mantenimiento, Clientes_Churn.Tipo_Queja, 
+                         Clientes_Churn.Mantenimientos_Mensuales, Clientes_Churn.Tipo_Mantenimiento, Clientes_Churn.Horas_Afectacion]]
+        X_all_scaled = self.scaler.transform(X_all)
+        self.df['Churn_Pred'] = self.model.predict(X_all_scaled)
+
+        max_quejas = self.df[Clientes_Churn.Cantidad_Quejas].max()
+        max_horas_afectacion = self.df[Clientes_Churn.Horas_Afectacion].max()
+
+        self.df[Clientes_Churn.Satisfaccion] = 1 - (self.df[Clientes_Churn.Horas_Afectacion] / max_horas_afectacion)
+        self.df[Clientes_Churn.Insatisfaccion] = self.df[Clientes_Churn.Cantidad_Quejas] / max_quejas
+
+        # Filtrar clientes en riesgo de abandono
+        clientes_en_riesgo = self.df[self.df['Churn_Pred'] == 1]
+        return clientes_en_riesgo[[Clientes_Churn.Id, Clientes_Churn.Velocidad_Canal, Clientes_Churn.Antiguedad, Clientes_Churn.Cantidad_Quejas, Clientes_Churn.Mantenimientos_Mensuales, Clientes_Churn.Satisfaccion, Clientes_Churn.Insatisfaccion]]

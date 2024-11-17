@@ -20,7 +20,7 @@ def create_standar_top_level(
         main_label: str, 
         height: int = 400,
         analyze_risk: bool = False,
-        analyze_risk_command: Callable[[], None] = None
+        analyze_risk_command: Callable[[tk.Toplevel], None] = None
     ) -> tk.Toplevel:
     new_window = tk.Toplevel()
     new_window.title(title)
@@ -38,7 +38,7 @@ def create_standar_top_level(
 
     # Agregar botón adicional si analyze_risk es True
     if analyze_risk:        
-        risk_button = tk.Button(new_window, text="Analizar riesgo de abandono", command=analyze_risk_command)
+        risk_button = tk.Button(new_window, text="Analizar riesgo de abandono", command=lambda: analyze_risk_command(new_window))
         risk_button.grid(row=1, column=1, padx=10, pady=5, sticky="e")
     
     new_window.grid_columnconfigure(0, weight=1)
