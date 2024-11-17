@@ -1,4 +1,5 @@
 import tkinter as tk
+from typing import Callable
 from Grid.FilterableSortableTable import FilterableSortableTable
 from Utils import Utilities
 
@@ -14,7 +15,13 @@ def center_window(root, width=400, height=200):
     # Establece el tamaño y la posición de la ventana
     root.geometry(f'{width}x{height}+{x}+{y}')
 
-def create_standar_top_level(title: str, main_label: str, height: int = 400) -> tk.Toplevel:
+def create_standar_top_level(
+        title: str, 
+        main_label: str, 
+        height: int = 400,
+        analyze_risk: bool = False,
+        analyze_risk_command: Callable[[], None] = None
+    ) -> tk.Toplevel:
     new_window = tk.Toplevel()
     new_window.title(title)
     
@@ -24,10 +31,15 @@ def create_standar_top_level(title: str, main_label: str, height: int = 400) -> 
     
     # Función para abrir la tabla
     def open_filterable_table():
-        table_window = FilterableSortableTable(new_window, "Clientes Churn - Chile", "1200x600", 'Data/Clientes-Churn-Chile-Sky-22102024.xlsx') 
+        table_window = FilterableSortableTable(new_window, "Clientes Churn - Chile", "1200x600", 'Data/Clientes-Churn-Chile-Sky-22102024.xlsx')
 
     button = tk.Button(new_window, text="Ver información", command=open_filterable_table)
     button.grid(row=1, column=0, padx=10, pady=5, sticky="w")
+
+    # Agregar botón adicional si analyze_risk es True
+    if analyze_risk:        
+        risk_button = tk.Button(new_window, text="Analizar riesgo de abandono", command=analyze_risk_command)
+        risk_button.grid(row=1, column=1, padx=10, pady=5, sticky="e")
     
     new_window.grid_columnconfigure(0, weight=1)
     new_window.grid_columnconfigure(1, weight=1)

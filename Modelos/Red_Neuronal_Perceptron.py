@@ -6,10 +6,19 @@ from Utils import Utilities
 from Modelos.Algoritmos.Red_Neuronal_Perceptron import ChurnPredictionModel
 from Data.Clientes_Churn_Chile import Clientes_Churn
 
+def analyze_risk_clients():
+    print("Analizando clientes con riesgo de abandono en red neuronal")
+
 def create_red_neuronal_top_level():
     total_rows_in_standar_window = 2
     height = 500
-    window = Utilities.create_standar_top_level("Red neuronal", "Perceptron - Tipo de red neuronal artificial", height)
+    window = Utilities.create_standar_top_level(
+        "Red neuronal", 
+        "Perceptron - Tipo de red neuronal artificial", 
+        height,
+        analyze_risk=True,
+        analyze_risk_command=analyze_risk_clients
+    )
     
     df = pd.read_excel('Data/Clientes-Churn-Chile-Sky-22102024.xlsx')
 
