@@ -36,13 +36,13 @@ class ArbolDeDecisionChurnPredictionModel:
         
         self.df['Churn'] = ((self.df[Clientes_Churn.Cantidad_Quejas] > umbral_quejas) | (self.df[Clientes_Churn.Mantenimientos_Mensuales] > umbral_mantenimientos)).astype(int)
         
-        # Variables predictoras
+        # Variables predictoras y objetivo
         X = self.df[[Clientes_Churn.Region, Clientes_Churn.Comuna, Clientes_Churn.Provincia, Clientes_Churn.Velocidad_Canal, 
                      Clientes_Churn.Antiguedad, Clientes_Churn.Tipo_Mantenimiento, Clientes_Churn.Tipo_Queja, 
                      Clientes_Churn.Mantenimientos_Mensuales, Clientes_Churn.Tipo_Mantenimiento, Clientes_Churn.Horas_Afectacion]]
         y = self.df['Churn']
         
-        # Dividir los datos en entrenamiento y prueba
+        # División de datos en entrenamiento y prueba
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.3, random_state=42)
         
         # Normalización
@@ -50,7 +50,7 @@ class ArbolDeDecisionChurnPredictionModel:
         self.X_test = self.scaler.transform(self.X_test)
 
     def train_model(self):
-        # Entrenando el modelo de Árbol de Decisión
+        # Entrenamiento del modelo de Árbol de Decisión
         self.model = DecisionTreeClassifier(random_state=42)
         self.model.fit(self.X_train, self.y_train)
     
