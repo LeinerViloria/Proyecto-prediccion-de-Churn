@@ -171,4 +171,4 @@ def create_regresion_lineal_top_level():
 
 
 # Registro del modelo para el menú
-REGRESION_LINEAL = {"label": "Usar Algoritmo Regresion_Lineal", "action": create_regresion_lineal_top_level}
+REGRESION_LINEAL = {"label": "Usar Algoritmo Regresion lineal", "action": create_regresion_lineal_top_level}

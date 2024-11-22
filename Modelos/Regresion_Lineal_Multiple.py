@@ -5,6 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 import matplotlib.pyplot as plt
+from Data.Clientes_Churn_Chile import Clientes_Churn
 from Utils import Utilities
 
 def create_regresion_lineal_multiple_top_level():
@@ -20,11 +21,11 @@ def create_regresion_lineal_multiple_top_level():
 
         # Verificar columnas requeridas en el archivo Excel
         required_columns = [
-            'Velocidad del Canal (Mbps)', 
-            'Antigüedad (años)', 
-            'Cantidad de Quejas', 
-            'Mantenimientos Mensuales', 
-            'Horas de Afectación'
+            Clientes_Churn.Velocidad_Canal, 
+            Clientes_Churn.Antiguedad, 
+            Clientes_Churn.Cantidad_Quejas, 
+            Clientes_Churn.Mantenimientos_Mensuales, 
+            Clientes_Churn.Horas_Afectacion
         ]
         target_column = 'Probabilidad de Churn'
         
